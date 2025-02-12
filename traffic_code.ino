@@ -24,8 +24,6 @@ const int controller_2 = 10;
 
 int digit1, digit2; // initialize individual digit to controll each segment
 
-int controllers[2] = {controller_1, controller_2};
-
 
 void setup() {
   for (int i = 2; i < 9; i++)
@@ -49,7 +47,7 @@ void loop(){
 }
 
 //counter
-void counter(int segment[], int start_of_countdown, int end_of_countdown=0) {
+void counter(int start_of_countdown, int end_of_countdown=0) {
   if(digitalRead(check)){
     for (int j = start_of_countdown; j>=end_of_countdown; j--)//
     {
@@ -57,12 +55,12 @@ void counter(int segment[], int start_of_countdown, int end_of_countdown=0) {
       digit1 = j % 10;
       for ( int k = 0; k<50; k++)//
       {
-        digitalWrite(segment[0], HIGH);
-        digitalWrite(segment[1], LOW);
+        digitalWrite(controller_1, HIGH);
+        digitalWrite(controller_2, LOW);
         dis(digit1);
         delay(10);
-        digitalWrite(segment[1], HIGH);
-        digitalWrite(segment[0], LOW);
+        digitalWrite(controller_2, HIGH);
+        digitalWrite(controller_1, LOW);
         dis(digit2);
         delay(10);
       }
@@ -124,13 +122,13 @@ void traffic_stop(){
 void traffic_light() {
   if(digitalRead(check)){
     green_on(lights[0], lights[1]);
-    counter(controllers, 10, 3);
+    counter(10, 3);
     yellow_on(lights[0], lights[1]);
-    counter(controllers, 2, 0);
+    counter(2, 0);
     green_on(lights[1], lights[0]);
-    counter(controllers, 5, 3);
+    counter(5, 3);
     yellow_on(lights[1], lights[0]);
-    counter(controllers, 2, 0);
+    counter(2, 0);
     }
   else{ 
     traffic_stop();
